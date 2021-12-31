@@ -7,6 +7,7 @@ import StarsIcon from '@material-ui/icons/Stars';
 import { Button, Grid, Box, CircularProgress, Typography } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card'
+import Pagination from "./Pagination";
 
 
 const useStyles = makeStyles(theme=>({
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme=>({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'fixed',
-    backgroundColor: theme.palette.text.light,
+    backgroundColor: theme.palette.background.light,
     right: 0,
     bottom: 0,
     top: 0,
@@ -61,19 +62,7 @@ const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
           );
         })}
       </Grid>
-      {paginationAvailable && (
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingBottom: 10,
-          }}
-        >
-          <Button variant="contained" color="primary" onClick={loadMore}>
-            Ver mas
-          </Button>
-        </Box>
-      )}
+    <Pagination paginationAvailable={paginationAvailable} loadMore={loadMore}  />
     </>
   );
 };

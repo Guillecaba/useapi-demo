@@ -40,6 +40,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: 'auto',
         marginRight: 'auto',
         cursor: 'pointer',
+        minWidth: '80%'
        
       },
       tumb: {
