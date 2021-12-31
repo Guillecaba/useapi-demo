@@ -43,6 +43,13 @@ export const theme = createTheme({
         color: '#212121',
         lineHeight: '20px',
         fontWeight: 500
+      },
+      h3:{
+        fontSize: 18,
+        fontFamily: 'Nunito',
+        letterSpacing: 0.2,
+        lineHeight: '20px',
+        fontWeight: 500
       }
     },
   });

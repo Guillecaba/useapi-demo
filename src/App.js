@@ -14,8 +14,8 @@ function App() {
       <Box>
         <AppBar position="static">
           <Toolbar>
-            <Typography textAlign="center" variant="h6">
-              Yu-Gi-Oh
+            <Typography variant="h3" textAlign="center" >
+              Yu-Gi-Oh - Portal
             </Typography>
           </Toolbar>
         </AppBar>
