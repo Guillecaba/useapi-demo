@@ -83,7 +83,6 @@ const Content = () => {
   const baseUrl = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&num=12&offset=0`;
   //&type=Effect Monster&offset=${offset}`;
   const loadMore = () => {
-    console.log('Loadmore')
     setLoading(true);
     axios.get(next).then(response => {
       const cards = items
@@ -101,7 +100,6 @@ const Content = () => {
       isFirstRun.current = false;
       return;
     }
-    console.log('update aca')
     let separator = '?';
     let url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
     let filters = {num:12,offset:0};
@@ -120,6 +118,7 @@ const Content = () => {
       url = `${url + separator + k}=${filters[k]}`;
       separator = '&';
     }
+    setLoading(true)
     axios.get(url)
         .then((response) => {
           const cartas = response.data.data;
@@ -133,10 +132,10 @@ const Content = () => {
     
   },[name, filter])
   useEffect(() => {
+    setLoading(true)
     axios.get(baseUrl).then((response) => {
       const yugiCards = _.get(response, "data.data");
       const nextUrl = response.data.meta.next_page;
-      console.log(yugiCards);
       setNext(nextUrl);
       setItems(yugiCards);
     }).finally(()=> {
@@ -151,7 +150,6 @@ const Content = () => {
   }
 
   const inputSelectHandler = (option) => {
-    console.log(option)
     setFilter(option)
   }
 
