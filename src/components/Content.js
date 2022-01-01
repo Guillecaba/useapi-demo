@@ -4,10 +4,12 @@ import axios from "axios";
 import * as _ from "lodash";
 import { Box, Container, TextField, Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
-import Select from 'react-select';
-import { typeOptions } from '../utils';
+
 import ImagePreview from './ImagePreview';
 import { theme } from "../theme";
+import Filters from "./Filters";
+import { getCards, baseUrl } from '../api';
+
 
 
 const useStyles = makeStyles(theme =>({
@@ -79,29 +81,31 @@ const Content = () => {
   const[next,setNext] = useState('');
   const [loading,setLoading] = useState(false);
   const [imagePreview,setImagePreview] = useState(false);
-  const [imageUrl,setImageUrl] = useState('')
-  const baseUrl = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&num=12&offset=0`;
+  const [imageUrl, setImageUrl] = useState('');
   //&type=Effect Monster&offset=${offset}`;
   const loadMore = () => {
     setLoading(true);
-    axios.get(next).then(response => {
-      const cards = items
+    getCards(next).then(response => {
       const yugiCards = _.get(response, "data.data");
       const newItems = items.concat(yugiCards);
-      const nextUrl = response.data.meta.next_page;
+      const nextUrl =  _.get(response,"data.meta.next_page") || "";
       setItems(newItems);
       setNext(nextUrl);
-    }).finally(()=> {
+    }).catch(e => {
+      console.log(e);
+      setItems([]);
+      setNext('');
+    }) .finally(()=> {
       setLoading(false);
     })
   };
-  useEffect(()=>{
+useEffect(()=>{
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
     }
     let separator = '?';
-    let url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+    let url = baseUrl
     let filters = {num:12,offset:0};
     if (name !== '') {
       filters = { ...filters, fname:name };
@@ -119,28 +123,38 @@ const Content = () => {
       separator = '&';
     }
     setLoading(true)
-    axios.get(url)
-        .then((response) => {
-          const cartas = response.data.data;
-          const nextUrl = response.data.meta.next_page;
-          
-         setItems(cartas)
-         setNext(nextUrl);
-        }).finally(()=> {
-          setLoading(false);
-        })
+    getCards(url)
+      .then((response) => {
+        const cartas = response.data.data;
+        const nextUrl = response.data.meta.next_page;
+
+        setItems(cartas);
+        setNext(nextUrl);
+      }).catch(e => {
+        setItems([]);
+        setNext('');
+      }) 
+      .finally(() => {
+        setLoading(false);
+      });
     
-  },[name, filter])
+  },[name, filter]);
   useEffect(() => {
-    setLoading(true)
-    axios.get(baseUrl).then((response) => {
-      const yugiCards = _.get(response, "data.data");
-      const nextUrl = response.data.meta.next_page;
+    setLoading(false);
+    const url = baseUrl + '?&num=12&offset=0';
+    getCards(url).then(response => {
+      const yugiCards = _.get(response, "data.data") || [];
+      const nextUrl = _.get(response,"data.meta.next_page") || "";
+      setLoading(false);
       setNext(nextUrl);
       setItems(yugiCards);
-    }).finally(()=> {
+    }).catch(e => {
+      setItems([]);
+      setNext('');
+    }) 
+    .finally(() => {
       setLoading(false);
-    });
+    }) 
   }, []);
 
   const inputNameHandler = (e) => {
@@ -158,111 +172,28 @@ const Content = () => {
     setImageUrl(url);
   }
 
-  const customStyles = {
-   
-    control: (styles, { isFocused, isDisabled }) => ({
-      ...styles,
-      backgroundColor:  theme.palette.background.default,
-      border: 'none',
-      '&:hover': { borderColor: 'none' },
-      '&:active': { borderColor: 'none' },
-      border: 0,
-    // This line disable the blue border
-      boxShadow: 'none'
-      
-      
-    }),
-    placeholder: styles => ({
-      ...styles,
-      fontSize: 16,
-      color: theme.palette.text.primary,
-      //paddingBottom: 25,
-      fontFamily: theme.typography.fontFamily,
-      fontWeight: theme.typography.fontWeightMedium,
-      fontSize: 13
-    }),
-    singleValue: (styles, { isDisabled }) => ({
-      ...styles,
-      color: theme.palette.text.primary,
-      fontSize: 12
-    }),
-    option: (styles, { isFocused,isSelected }) => ({
-      ...styles,
-      backgroundColor: isFocused ? 'rgba(0, 0, 0, 0.08);': isSelected ? 'rgba(0, 0, 0, 0.08);' :'transparent',
 
-      color: isSelected ? theme.palette.grey.main : theme.palette.text.primary ,
-      fontSize: isSelected ? 12 :12,
-      fontFamily: theme.typography.fontFamily,
-      fontWeight: isSelected ? '800': theme.typography.fontWeightMedium,
-    }),
-    
-  }
 
   const paginationAvailable = !!next;
 
   return (
     <Container maxWidth="xl" className={classes.background}>
+      <ImagePreview
+        open={imagePreview}
+        togglePreview={setImagePreview}
+        imageUrl={imageUrl}
+      />
       <Grid
         container
         className={classes.filterContainer}
         justifyContent="space-between"
         alignItems="center"
       >
-        <ImagePreview
-          open={imagePreview}
-          togglePreview={setImagePreview}
-          imageUrl={imageUrl}
+        <Filters
+          filter={filter}
+          inputNameHandler={inputNameHandler}
+          inputSelectHandler={inputSelectHandler}
         />
-        <Grid item item xs={12} md={4} sm={4} lg={4}>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            className={classes.searchContainer}
-          >
-            <Typography className={classes.label} variant="subtitle1">
-              Buscar
-            </Typography>
-            <TextField
-              onKeyDown={(e) => {
-                inputNameHandler(e);
-              }}
-              InputProps={{
-                classes: {
-                  input: classes.projectFilterInput,
-                },
-              }}
-              InputLabelProps={{
-                classes: {
-                  root: classes.projectsLabel,
-                  // shrink: classes.projectsFilterLabelInput
-                },
-              }}
-              label={"by name"}
-              variant="outlined"
-              margin="dense"
-              fullWidth
-              className={classes.textField}
-            />
-          </Box>
-        </Grid>
-        <Grid item item xs={12} md={4} sm={4} lg={4}>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Typography className={classes.label} variant="subtitle1">
-              {"Type"}
-            </Typography>
-            <Box style={{ width: "100%", zIndex: 10 }}>
-              <Select
-                onChange={(option) => inputSelectHandler(option)}
-                isClearable={true}
-                value={filter}
-                options={typeOptions}
-                styles={customStyles}
-                placeholder={"select a type"}
-              />
-            </Box>
-          </Box>
-        </Grid>
       </Grid>
 
       <List

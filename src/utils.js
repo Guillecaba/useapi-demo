@@ -1,3 +1,5 @@
+import { theme } from './theme';
+
 export const typeOptions = [
   {
     label: "Effect Monster",
@@ -76,3 +78,44 @@ export const typeOptions = [
     value: "Union Effect Monster",
   },
 ];
+
+
+export const customStyles = {
+   
+  control: (styles, { isFocused, isDisabled }) => ({
+    ...styles,
+    backgroundColor:  theme.palette.background.default,
+    border: 'none',
+    '&:hover': { borderColor: 'none' },
+    '&:active': { borderColor: 'none' },
+    border: 0,
+  // This line disable the blue border
+    boxShadow: 'none'
+    
+    
+  }),
+  placeholder: styles => ({
+    ...styles,
+    fontSize: 16,
+    color: theme.palette.text.primary,
+    //paddingBottom: 25,
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: theme.typography.fontWeightMedium,
+    fontSize: 13
+  }),
+  singleValue: (styles, { isDisabled }) => ({
+    ...styles,
+    color: theme.palette.text.primary,
+    fontSize: 12
+  }),
+  option: (styles, { isFocused,isSelected }) => ({
+    ...styles,
+    backgroundColor: isFocused ? 'rgba(0, 0, 0, 0.08);': isSelected ? 'rgba(0, 0, 0, 0.08);' :'transparent',
+
+    color: isSelected ? theme.palette.grey.main : theme.palette.text.primary ,
+    fontSize: isSelected ? 12 :12,
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: isSelected ? '800': theme.typography.fontWeightMedium,
+  }),
+  
+}

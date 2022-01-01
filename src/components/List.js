@@ -1,10 +1,7 @@
 
 
 import React from "react";
-import OfflineBoltIcon from '@material-ui/icons/OfflineBolt';
-import SecurityIcon from '@material-ui/icons/Security';
-import StarsIcon from '@material-ui/icons/Stars';
-import { Button, Grid, Box, CircularProgress, Typography } from "@material-ui/core";
+import { Grid, Box, CircularProgress, Typography} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card'
 import Pagination from "./Pagination";
@@ -41,7 +38,7 @@ const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
             <CircularProgress />
           </Box>
         )}
-        {items.map((item, index) => {
+        {items.length > 0 ? items.map((item, index) => {
           const showStats = (item.atk && item.def && item.level) || false;
           const imageUrlSmall =  item.card_images[0] && item.card_images[0].image_url_small || 'https://storage.googleapis.com/ygoprodeck.com/pics_small/34541863.jpg';
           const imageUrlBig =  item.card_images[0] && item.card_images[0].image_url || 'https://storage.googleapis.com/ygoprodeck.com/pics/34541863.jpg'
@@ -60,7 +57,11 @@ const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
               imageUrlSmall={imageUrlSmall}
             />
           );
-        })}
+        }):<Box>
+          <Typography>
+            Nada
+          </Typography>
+          </Box>}
       </Grid>
     <Pagination paginationAvailable={paginationAvailable} loadMore={loadMore}  />
     </>
