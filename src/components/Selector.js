@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import Select from 'react-select';
 import { typeOptions,  customStyles } from '../utils';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   label: {
@@ -13,10 +14,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Selector = ({filter, inputSelectHandler}) => {
     const classes = useStyles();
+    const { t } = useTranslation();
   return (
     <Box display="flex" flexDirection="row" alignItems="center">
       <Typography className={classes.label} variant="subtitle1">
-        {"Type"}
+      {t('general.type')}
       </Typography>
       <Box zIndex={10} width={"100%"}>
         <Select
@@ -25,7 +27,7 @@ const Selector = ({filter, inputSelectHandler}) => {
           value={filter}
           options={typeOptions}
           styles={customStyles}
-          placeholder={"select a type"}
+          placeholder= {t('general.byType')}
         />
       </Box>
     </Box>

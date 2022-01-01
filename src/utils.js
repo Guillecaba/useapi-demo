@@ -88,7 +88,6 @@ export const customStyles = {
     border: 'none',
     '&:hover': { borderColor: 'none' },
     '&:active': { borderColor: 'none' },
-    border: 0,
   // This line disable the blue border
     boxShadow: 'none'
     
@@ -96,7 +95,6 @@ export const customStyles = {
   }),
   placeholder: styles => ({
     ...styles,
-    fontSize: 16,
     color: theme.palette.text.primary,
     //paddingBottom: 25,
     fontFamily: theme.typography.fontFamily,
@@ -119,3 +117,15 @@ export const customStyles = {
   }),
   
 }
+
+
+
+
+export const normalizeLanguages = (lang) => {
+  const shortLang = !!lang ? lang.substr(0, 2) : "es";
+  const languages = {
+    en: "en",
+    es: "es",
+  };
+  return languages[shortLang] || languages["es"];
+};

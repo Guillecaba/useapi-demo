@@ -1,0 +1,11 @@
+{
+    "general":{
+        "title":"Encuentra la carta que buscas",
+        "emptyResults":"No hay resultados",
+        "search": "Buscar",
+        "byName": "por nombre",
+        "type":"Tipo",
+        "byType": "seleccionar un tipo",
+        "more":"Ver más"
+    }
+}

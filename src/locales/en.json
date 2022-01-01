@@ -1,0 +1,11 @@
+{
+    "general":{
+        "title":"Find the card you are looking for",
+        "emptyResults":"Not results found",
+        "search": "Search",
+        "byName": "by name",
+        "type":"Type",
+        "byType": "select a type",
+        "more":"View More"
+    }
+}

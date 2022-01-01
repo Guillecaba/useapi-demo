@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles(theme =>({
     searchContainer:{
@@ -53,6 +54,7 @@ const useStyles = makeStyles(theme =>({
 
 const Search = ({inputNameHandler}) => {
     const classes = useStyles();
+    const { t } = useTranslation();
     return (
       <Box
         display="flex"
@@ -61,7 +63,7 @@ const Search = ({inputNameHandler}) => {
         className={classes.searchContainer}
       >
         <Typography className={classes.label} color="secondary" variant="subtitle1">
-          Buscar
+          {t('general.search')}
         </Typography>
         <TextField
           onKeyDown={(e) => {
@@ -77,7 +79,7 @@ const Search = ({inputNameHandler}) => {
               root: classes.innerLabel,
             },
           }}
-          label={"by name"}
+          label= {t('general.byName')}
           variant="outlined"
           margin="dense"
           fullWidth

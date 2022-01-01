@@ -8,13 +8,12 @@ import { makeStyles } from "@material-ui/core";
 import ImagePreview from '../components/ImagePreview';
 import Filters from "../components/Filters";
 import { getCards, baseUrl } from '../api';
+import { useTranslation } from 'react-i18next';
 
 
 
 const useStyles = makeStyles((theme) => ({
-  background: {
-    //backgroundColor:theme.palette.background.default
-  },
+  
   filtersContainer: {
     marginTop: 10,
     paddingLeft: 30,
@@ -27,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Content = () => {
   const classes = useStyles();
+  const {t} = useTranslation()
   const isFirstRun = useRef(true);
   const [items, setItems] = useState([]);
   const [name, setName] = useState("");
@@ -98,7 +98,7 @@ const Content = () => {
   useEffect(() => {
     setLoading(false);
     const url = baseUrl + "?&num=12&offset=0";
-   /*  getCards(url)
+    getCards(url)
       .then((response) => {
         const yugiCards = _.get(response, "data.data") || [];
         const nextUrl = _.get(response, "data.meta.next_page") || "";
@@ -112,7 +112,7 @@ const Content = () => {
       })
       .finally(() => {
         setLoading(false);
-      }); */
+      }); 
   }, []);
 
   const inputNameHandler = (e) => {
@@ -133,7 +133,7 @@ const Content = () => {
   const paginationAvailable = !!next;
 
   return (
-    <Container maxWidth="xl" className={classes.background}>
+    <Container maxWidth="xl">
       <ImagePreview
         open={imagePreview}
         togglePreview={setImagePreview}
@@ -141,7 +141,7 @@ const Content = () => {
       />
       <Grid className={classes.titleContainer} container justifyContent="center">
         <Typography variant="h1" color="secondary">
-          Encuentra la carta que buscas
+          {t('general.title')}
         </Typography>
       </Grid>
       <Grid

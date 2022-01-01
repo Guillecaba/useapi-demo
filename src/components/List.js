@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from './Card'
 import Pagination from "./Pagination";
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import { useTranslation } from "react-i18next";
 
 
 const useStyles = makeStyles(theme=>({
@@ -27,13 +28,13 @@ const useStyles = makeStyles(theme=>({
   noResultContainer:{
     minHeight:'400px'
   }
-  
 })); 
 
 
 
 const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
   const classes = useStyles();
+  const { t } = useTranslation;
   return (
     <>
       <Grid container justifyContent="center" className={classes.mainContainer}>
@@ -70,7 +71,7 @@ const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
         ) : (
           <Box className={classes.noResultContainer} justifyContent="center"  direction="column" alignItems="center" display="flex">
             <SentimentVeryDissatisfiedIcon  fontSize="large" color="secondary"  />
-            <Typography pl={2} variant="h2" color="secondary">No hay resultados</Typography>
+            <Typography pl={2} variant="h2" color="secondary">{t('general.emptyResults')}</Typography>
           </Box>
         )}
       </Grid>
