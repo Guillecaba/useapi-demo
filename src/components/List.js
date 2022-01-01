@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme=>({
 
 const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
   const classes = useStyles();
-  const { t } = useTranslation;
+  const { t } = useTranslation();
   return (
     <>
       <Grid container justifyContent="center" className={classes.mainContainer}>
@@ -47,10 +47,10 @@ const List = ({ items, loadMore, paginationAvailable, loading, showImage }) => {
           items.map((item, index) => {
             const showStats = (item.atk && item.def && item.level) || false;
             const imageUrlSmall =
-              (item.card_images[0] && item.card_images[0].image_url_small) ||
+              ( !!item.card_images && item.card_images[0] && item.card_images[0].image_url_small) ||
               "https://storage.googleapis.com/ygoprodeck.com/pics_small/34541863.jpg";
             const imageUrlBig =
-              (item.card_images[0] && item.card_images[0].image_url) ||
+              (!!item.card_images && item.card_images[0] && item.card_images[0].image_url) ||
               "https://storage.googleapis.com/ygoprodeck.com/pics/34541863.jpg";
             return (
               <Card

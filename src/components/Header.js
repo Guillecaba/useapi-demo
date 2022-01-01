@@ -14,8 +14,7 @@ const Header = () => {
   const [menuLanguage, setMenuLanguage] = useState();
 
   const changeLang = event => {
-    localStorage.setItem('language', event);
-    console.log(event)
+    localStorage.setItem("language", event);
     i18n.changeLanguage(event);
     setMenuLanguage(event);
   };
