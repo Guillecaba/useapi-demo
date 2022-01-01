@@ -38,12 +38,26 @@ export const theme = createTheme({
         fontSize:'12px'
       },
       subtitle1:{
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'Nunito',
         letterSpacing: 0.2,
         color: '#212121',
         lineHeight: '20px',
-        fontWeight: 500
+        fontWeight: 700
+      },
+      h1:{
+        fontSize: 26,
+        fontFamily: 'Nunito',
+        letterSpacing: 0.2,
+        lineHeight: '20px',
+        fontWeight: 800
+      },
+      h2: {
+        fontSize: 22,
+        fontFamily: 'Nunito',
+        letterSpacing: 0.2,
+        lineHeight: '20px',
+        fontWeight: 600
       },
       h3:{
         fontSize: 18,

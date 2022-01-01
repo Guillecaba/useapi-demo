@@ -18,7 +18,7 @@ const Selector = ({filter, inputSelectHandler}) => {
       <Typography className={classes.label} variant="subtitle1">
         {"Type"}
       </Typography>
-      <Box zIndex={10} width={'100%'} >
+      <Box zIndex={10} width={"100%"}>
         <Select
           onChange={(option) => inputSelectHandler(option)}
           isClearable={true}

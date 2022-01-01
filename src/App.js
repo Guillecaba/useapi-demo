@@ -1,6 +1,5 @@
 import './App.css';
-
-import Content from './components/Content';
+import Content from "./screens/Content";
 
 import { Box } from "@material-ui/core";
 import {  MuiThemeProvider } from '@material-ui/core/styles';

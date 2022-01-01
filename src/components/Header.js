@@ -1,5 +1,5 @@
 
-import {AppBar,Box,Typography,Toolbar } from "@material-ui/core";
+import { AppBar, Typography, Toolbar } from "@material-ui/core";
 import React from 'react';
 
 const Header = () => (<AppBar position="static">
